@@ -11,15 +11,26 @@ public class GameManager : MonoBehaviour
     private GameTile spawnTile;
     const int ColCount = 20;
     const int RowCount = 10;
-
+    private int tilePrice;
     public GameTile TargetTile { get; internal set; }
 
     List<GameTile> pathToGoal = new List<GameTile>();
 
     GameTile LastPathTile;
-    public List<GameTile>[] paths = new List<GameTile>[5];
+    //public List<GameTile>[] paths = new List<GameTile>[5]; //peut etre pas
+
+    internal Turret selectedTurret;
+
+    PlayerStat playerStat;
+
+    public bool modeInfini = false;
+
+    [SerializeField] private TileWallPos[] TileWallPos;
+
+    public EnnemyStat[] ennemyStats;
     private void Awake()
     {
+        playerStat = GetComponent<PlayerStat>();
         gameTiles = new GameTile[ColCount, RowCount];
 
         for (int x = 0; x < ColCount; x++)
@@ -43,8 +54,64 @@ public class GameManager : MonoBehaviour
         spawnTile = gameTiles[1, 7];
         LastPathTile = spawnTile;
         spawnTile.SetEnemySpawn();
+        if (!modeInfini)
+        {
+            MakePath();
+        }
     }
+    private void MakePath()
+    {
+        foreach(TileWallPos pos in TileWallPos)
+        {
+            var path = Pathfinding(LastPathTile, TargetTile);
+            var tile = gameTiles[pos.x, pos.y];
 
+            if (LastPathTile == spawnTile)
+            {
+                while (tile != null)
+                {
+                    pathToGoal.Add(tile);
+                    tile.SetPath(true);
+                    tile = path[tile];
+                    if (tile != null)
+                    {
+
+                        LastPathTile = tile;
+                    }
+                    else
+                    {
+                        LastPathTile = pathToGoal.ElementAt(0);
+                    }
+                }
+                StartCoroutine(SpawnEnemyCoroutine());
+            }
+            else
+            {
+                GameTile[] originalPath = pathToGoal.ToArray();
+                pathToGoal.Clear();
+                while (tile != null)
+                {
+                    pathToGoal.Add(tile);
+                    tile.SetPath(true);
+                    tile = path[tile];
+                    if (tile != null)
+                    {
+
+                        LastPathTile = tile;
+                    }
+                    else
+                    {
+                        LastPathTile = pathToGoal.ElementAt(0);
+                    }
+                }
+                foreach (GameTile tuile in originalPath)
+                {
+                    pathToGoal.Add(tuile);
+                }
+            }
+        }
+        
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && TargetTile != null)
@@ -185,6 +252,7 @@ public class GameManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.6f);
                 var enemy = Instantiate(enemyPrefab, spawnTile.transform.position, Quaternion.identity);
+                enemy.GetComponent<Enemy>().stat = ennemyStats[0];
                 enemy.GetComponent<Enemy>().SetPath(pathToGoal);
             }
             yield return new WaitForSeconds(2f);

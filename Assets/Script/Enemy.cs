@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,15 +10,20 @@ public class Enemy : MonoBehaviour
     public static HashSet<Enemy> allEnemies = new HashSet<Enemy>();
     private Stack<GameTile> path = new Stack<GameTile>();
     float vitesse = 2;
-    int hp = 20;
-
+    float HP;
+    internal EnnemyStat stat;
+    internal PlayerStat PlayerStat;
     private void Awake()
     {
         allEnemies.Add(this);
+        
     }
 
     internal void SetPath(List<GameTile> pathToGoal)
     {
+        ResetSpeed();
+        HP = stat.hp;
+
         path.Clear();
         foreach (GameTile tile in pathToGoal)
         {
@@ -24,11 +32,12 @@ public class Enemy : MonoBehaviour
     }
     public void ResetSpeed()
     {
-        vitesse = 2;
+        vitesse = stat.baseVitesse;
     }
-    public void ChangeSpeedMultiplication(int nombre)
+    public void ChangeSpeedMultiplication(float nombre)
     {
         vitesse *= nombre;
+        
     }
     void Update()
     {
@@ -44,25 +53,33 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            Die();
+            Die(false);
         }
     }
 
-    private void Die()
+    private void Die(bool w)
     {
+        if (w)
+        {
+
+            PlayerStat.GagnerArgent(stat.valeur);
+        }
         allEnemies.Remove(this);
         Destroy(gameObject);
     }
 
-    internal void Attack()
+    internal void Attack(int degat)
     {
-        if (--hp <= 0)
+        if (HP - degat <= 0)
         {
-            Die();
+            Die(true);
         }
         else
         {
-            visual.transform.localScale *= 0.9f;
+            HP -= degat;
+            float scaleChange = 1 - (float)(degat * 0.1);
+            visual.transform.localScale *= scaleChange;
+
         }
     }
 }

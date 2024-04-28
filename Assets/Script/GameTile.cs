@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameTile : MonoBehaviour, IPointerEnterHandler,
     IPointerExitHandler, IPointerDownHandler
@@ -14,7 +15,8 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private bool canAttack = true;
-
+    private Turret Turret;
+    public Turret defaultTurret;
     public GameManager GM { get; internal set; }
     public int X { get; internal set; }
     public int Y { get; internal set; }
@@ -32,28 +34,56 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
 
     private void Update()
     {
+
         if (turretRenderer.enabled && canAttack)
         {
-            Enemy target = null;
-            foreach (var enemy in Enemy.allEnemies)
+            if (!Turret.wind)
             {
-                if (Vector3.Distance(transform.position, enemy.transform.position) < 2)
+                Enemy target = null;
+                foreach (var enemy in Enemy.allEnemies)
                 {
-                    target = enemy;
-                    break;
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < Turret.range)
+                    {
+                        if (Turret.electrique)
+                        {
+                            StartCoroutine(AttackCoroutine(enemy));
+                        }
+                        else
+                        {
+                            target = enemy;
+                            break;
+                        }
+                        
+                    }
+                }
+
+                if (target != null && !Turret.electrique)
+                {
+                    StartCoroutine(AttackCoroutine(target));
                 }
             }
-
-            if (target != null)
+            else
             {
-                StartCoroutine(AttackCoroutine(target));
+                foreach (var enemy in Enemy.allEnemies)
+                {
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < Turret.range)
+                    {
+                        enemy.ChangeSpeedMultiplication(0.5f);
+                        break;
+                    }
+                    else
+                    {
+                        enemy.ResetSpeed();
+                    }
+                }
             }
         }
+        
     }
 
     IEnumerator AttackCoroutine(Enemy target)
     {
-        target.GetComponent<Enemy>().Attack();
+        target.GetComponent<Enemy>().Attack(1);
         canAttack = false;
         lineRenderer.SetPosition(1, target.transform.position);
         lineRenderer.enabled = true;
@@ -82,6 +112,14 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (GM.selectedTurret != null)
+        {
+            Turret = GM.selectedTurret;
+        }
+        else
+        {
+            Turret = defaultTurret; 
+        }
         turretRenderer.enabled = !turretRenderer.enabled;
         IsBlocked = turretRenderer.enabled;
     }
