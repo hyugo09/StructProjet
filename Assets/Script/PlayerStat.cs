@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
@@ -12,10 +13,14 @@ public class PlayerStat : MonoBehaviour
     public TextMeshProUGUI textHP;
     public GameObject endScreen;
     public TextMeshProUGUI endText;
-
+    public int vague = 0;
+    public int ennemieRestant;
     private void Start()
     {
+        var temp = FindAnyObjectByType<DataTransfert>();
+        HP += temp.bonusHealth;
         setStatUi();
+        VagueSuivante();
     }
     public void degat(int degat)
     {
@@ -38,7 +43,31 @@ public class PlayerStat : MonoBehaviour
         }
         setStatUi();
     }
+    public void VagueSuivante()
+    {
+        if(vague == 5)
+        {
+
+        }
+        vague++;
+        ennemieRestant = vague * 50;
+        
+    }
+    public bool ennemieBattu()
+    {
+        ennemieRestant--;
+        if(ennemieRestant <= 0)
+        {
+            
+        }
+        return false;
+    }
     internal void GameOver()
+    {
+        FindAnyObjectByType<DataTransfert>().lastGameWin = false;
+        endScreen.SetActive(true);
+    }
+    internal void GameWin()
     {
         FindAnyObjectByType<DataTransfert>().lastGameWin = false;
         endScreen.SetActive(true);

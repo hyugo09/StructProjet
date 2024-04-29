@@ -76,7 +76,18 @@ public class SkillNode : MonoBehaviour
                 break;
         }
     }
-
+    public void AttackBonus()
+    {
+        FindAnyObjectByType<DataTransfert>().bonusAttack++;
+    }
+    public void CooldownBonus()
+    {
+        FindAnyObjectByType<DataTransfert>().bonusCooldown += 10;
+    }
+    public void VieBonus()
+    {
+        FindAnyObjectByType<DataTransfert>().bonusHealth++;
+    }
     public void Activate()
     {
         if (currentState == State.Accessible)

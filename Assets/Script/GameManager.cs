@@ -252,7 +252,8 @@ public class GameManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.6f);
                 var enemy = Instantiate(enemyPrefab, spawnTile.transform.position, Quaternion.identity);
-                enemy.GetComponent<Enemy>().stat = ennemyStats[0];
+                
+                enemy.GetComponent<Enemy>().stat = ennemyStats[Random.Range(0,ennemyStats.Length)];
                 enemy.GetComponent<Enemy>().SetPath(pathToGoal);
             }
             yield return new WaitForSeconds(2f);
