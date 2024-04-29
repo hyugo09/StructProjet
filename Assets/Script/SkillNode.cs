@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 enum State
 {
     Obtained,
@@ -9,57 +13,88 @@ enum State
 }
 public class SkillNode : MonoBehaviour
 {
-    [SerializeField] SkillNode nodeParent;
+    [SerializeField] int ID;
+    [SerializeField] SkillNode parentNode;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Turret bonus;
+    [SerializeField] internal string description;
+    internal Sprite sprite;
+    internal Color couleur;
     LineRenderer lineRenderer;
-    State state;
+    internal State currentState = State.Unaccessible;
     List<SkillNode> children = new List<SkillNode>();
+    public CompetenceUI ui;
+    public UnityEvent Obtained;
 
     private void Awake()
     {
 
-        lineRenderer = GetComponent<LineRenderer>();
-
-        if (nodeParent != null)
+        sprite = bonus.Sprite;
+        couleur = bonus.Color;
+        GetComponent<SpriteRenderer>().sprite = sprite;
+        GetComponent<SpriteRenderer>().color = couleur;
+        if (parentNode != null)
         {
-            nodeParent.children.Add(this);
+            parentNode.children.Add(this);
+            lineRenderer = GetComponent<LineRenderer>();
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, nodeParent.transform.position);
+            lineRenderer.SetPosition(1, parentNode.transform.position);
             SetState(State.Unaccessible);
         }
         else
         {
-            lineRenderer.enabled = false;
+
+            // On est à la racine
             SetState(State.Accessible);
         }
-        
+
+        if (FindAnyObjectByType<DataTransfert>().nodeObtained[ID])
+        {
+            SetState(State.Obtained);
+        }
     }
-    private void SetState(State newState)
+
+    internal void SetState(State nodeState)
     {
-        state = newState;
-        switch (state)
+        currentState = nodeState;
+        switch (currentState)
         {
             case State.Obtained:
                 spriteRenderer.color = Color.green;
-                foreach(SkillNode child in children)
-                {
+                foreach (var child in children)
                     child.SetState(State.Accessible);
-                }
                 break;
             case State.Accessible:
-                spriteRenderer.color = Color.yellow;
+                spriteRenderer.color = new Color(1, 0.75f, 0);
+                foreach (var child in children)
+                    child.SetState(State.Unaccessible);
                 break;
             case State.Unaccessible:
                 spriteRenderer.color = Color.red;
+                foreach (var child in children)
+                    child.SetState(State.Unaccessible);
                 break;
         }
     }
+
+    public void Activate()
+    {
+        if (currentState == State.Accessible)
+        {
+            SetState(State.Obtained);
+            Obtained.Invoke();
+        }
+    }
+    public void GiveTurretToDataTransfert(Turret unlocked)
+    {
+        FindAnyObjectByType<DataTransfert>().UnlockerTourelle(unlocked);
+    }
+    public void DataTransfertIDActivate()
+    {
+        FindAnyObjectByType<DataTransfert>().nodeActivationf(ID);
+    }
     private void OnMouseDown()
     {
-        if (state == State.Accessible)
-        {
-            spriteRenderer.color = Color.green;
-            SetState(State.Obtained);
-        }
+       ui.Changer(this);
     }
 }

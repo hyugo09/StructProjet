@@ -12,6 +12,7 @@ public class Turret : ScriptableObject
     [Range(1f, 10f)]
     public float range = 2;
     public Sprite Sprite;
+    public Color Color;
     public bool wind = false;
     public bool electrique = false;
 }

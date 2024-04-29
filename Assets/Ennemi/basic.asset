@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseVitesse: 2
   hp: 10
-  valeur: 100
+  valeur: 150

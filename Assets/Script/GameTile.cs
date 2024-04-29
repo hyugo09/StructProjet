@@ -53,7 +53,7 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
                             target = enemy;
                             break;
                         }
-                        
+
                     }
                 }
 
@@ -78,18 +78,18 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
                 }
             }
         }
-        
+
     }
 
     IEnumerator AttackCoroutine(Enemy target)
     {
-        target.GetComponent<Enemy>().Attack(1);
+        target.Attack(Turret.attack);
         canAttack = false;
         lineRenderer.SetPosition(1, target.transform.position);
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(0.2f);
         lineRenderer.enabled = false;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(Turret.shotCooldown);
         canAttack = true;
     }
 
@@ -112,16 +112,21 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (GM.selectedTurret != null)
+        if (spawnRenderer.enabled == false|| spriteRenderer.color == Color.yellow)
         {
-            Turret = GM.selectedTurret;
+            if (GM.selectedTurret != null)
+            {
+                Turret = GM.selectedTurret;
+            }
+            else
+            {
+                Turret = defaultTurret;
+            }
+            turretRenderer.enabled = !turretRenderer.enabled;
+            turretRenderer.sprite = Turret.Sprite;
+            turretRenderer.color = Turret.Color;
+            IsBlocked = turretRenderer.enabled;
         }
-        else
-        {
-            Turret = defaultTurret; 
-        }
-        turretRenderer.enabled = !turretRenderer.enabled;
-        IsBlocked = turretRenderer.enabled;
     }
 
     internal void SetEnemySpawn()

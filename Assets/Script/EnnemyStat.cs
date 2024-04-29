@@ -11,4 +11,6 @@ public class EnnemyStat : ScriptableObject
     public int hp = 10;
     [Range(100, 500)]
     public int valeur = 100;
+    public Sprite Sprite;
+    public Color Color;
 }
