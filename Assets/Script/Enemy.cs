@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -18,16 +19,28 @@ public class Enemy : MonoBehaviour
         allEnemies.Add(this);
         
     }
-
+    internal void setSprite()
+    {
+        //visual.GetComponent<SpriteRenderer>().sprite = stat.Sprite;
+        visual.GetComponent<SpriteRenderer>().color = stat.Color;
+    }
     internal void SetPath(List<GameTile> pathToGoal)
     {
         ResetSpeed();
         HP = stat.hp;
 
         path.Clear();
-        foreach (GameTile tile in pathToGoal)
+        if(stat.Fly == false)
         {
-            path.Push(tile);
+            foreach (GameTile tile in pathToGoal)
+            {
+                path.Push(tile);
+            }
+        }
+        else
+        {
+            path.Push(pathToGoal.First());
+            path.Push(pathToGoal.Last());
         }
     }
     public void ResetSpeed()
@@ -77,7 +90,7 @@ public class Enemy : MonoBehaviour
         else
         {
             HP -= degat;
-            float scaleChange = 1 - (float)(degat * 0.1);
+            float scaleChange = 1 - (float)(degat / stat.hp);            
             visual.transform.localScale *= scaleChange;
 
         }

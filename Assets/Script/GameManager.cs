@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private GameTile spawnTile;
     const int ColCount = 20;
     const int RowCount = 10;
-    private int tilePrice;
+    private int tilePrice = 100;
     public GameTile TargetTile { get; internal set; }
 
     List<GameTile> pathToGoal = new List<GameTile>();
@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
 
     public bool modeInfini = false;
 
-    [SerializeField] private TileWallPos[] TileWallPos;
+    [SerializeField] private int[] posWallX;
+    [SerializeField] private int[] posWallY;
 
     public EnnemyStat[] ennemyStats;
     private void Awake()
@@ -61,10 +62,10 @@ public class GameManager : MonoBehaviour
     }
     private void MakePath()
     {
-        foreach(TileWallPos pos in TileWallPos)
+        for (int i = 0; i < posWallX.Length; i++)
         {
             var path = Pathfinding(LastPathTile, TargetTile);
-            var tile = gameTiles[pos.x, pos.y];
+            var tile = gameTiles[posWallX[i], posWallY[i]];
 
             if (LastPathTile == spawnTile)
             {
@@ -254,6 +255,7 @@ public class GameManager : MonoBehaviour
                 var enemy = Instantiate(enemyPrefab, spawnTile.transform.position, Quaternion.identity);
                 
                 enemy.GetComponent<Enemy>().stat = ennemyStats[Random.Range(0,ennemyStats.Length)];
+                enemy.GetComponent<Enemy>().setSprite();
                 enemy.GetComponent<Enemy>().SetPath(pathToGoal);
             }
             yield return new WaitForSeconds(2f);

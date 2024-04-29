@@ -47,7 +47,7 @@ public class PlayerStat : MonoBehaviour
     {
         if(vague == 5)
         {
-
+            GameWin();
         }
         vague++;
         ennemieRestant = vague * 50;
@@ -58,7 +58,7 @@ public class PlayerStat : MonoBehaviour
         ennemieRestant--;
         if(ennemieRestant <= 0)
         {
-            
+            VagueSuivante();
         }
         return false;
     }
@@ -69,7 +69,9 @@ public class PlayerStat : MonoBehaviour
     }
     internal void GameWin()
     {
-        FindAnyObjectByType<DataTransfert>().lastGameWin = false;
+        var temp = FindAnyObjectByType<DataTransfert>();
+        temp.lastGameWin = true;
+        temp.UnlockerNiveau();
         endScreen.SetActive(true);
     }
     public void setStatUi()

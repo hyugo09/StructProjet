@@ -16,6 +16,7 @@ public class CompetenceUI : MonoBehaviour
     }
     public void ActiverNodeSelectionner()
     {
+        //if(FindAnyObjectByType<>)
         currentNode.Activate();
         Button.enabled = false;
     }
