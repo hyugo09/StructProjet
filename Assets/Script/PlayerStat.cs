@@ -10,6 +10,8 @@ public class PlayerStat : MonoBehaviour
     public int HP = 3;
     public TextMeshProUGUI textMoney;
     public TextMeshProUGUI textHP;
+    public GameObject endScreen;
+    public TextMeshProUGUI endText;
 
     private void Start()
     {
@@ -38,7 +40,8 @@ public class PlayerStat : MonoBehaviour
     }
     internal void GameOver()
     {
-
+        FindAnyObjectByType<DataTransfert>().lastGameWin = false;
+        endScreen.SetActive(true);
     }
     public void setStatUi()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Turret : ScriptableObject 
 {
-    [Range(0f, 2f)]
+    [Range(0f, 10f)]
     public float shotCooldown = 0.2f;
     [Range(1, 10)]
     public int attack = 2;

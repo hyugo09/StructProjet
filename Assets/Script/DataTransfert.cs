@@ -8,6 +8,8 @@ public class DataTransfert : MonoBehaviour
     public int bonusHealth;
     public bool lastGameWin;
     public bool[] nodeObtained = new bool[9];
+    public int NombrePCTotal;
+    public int NombrePCDispo;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -22,5 +24,19 @@ public class DataTransfert : MonoBehaviour
         {
             UnlockedTurret.Add(tourelle);
         }
+    }
+    public void GagnerPC(int nombre)
+    {
+        NombrePCTotal += nombre;
+        NombrePCDispo += nombre;
+    }
+    public bool dépenserPC(int cout)
+    {
+        if(NombrePCDispo - cout <= 0)
+        {
+            return false;
+        }
+        NombrePCDispo -= cout;
+        return true;
     }
 }
