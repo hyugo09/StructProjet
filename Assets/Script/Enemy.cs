@@ -13,11 +13,11 @@ public class Enemy : MonoBehaviour
     float vitesse = 2;
     float HP;
     internal EnnemyStat stat;
-    internal PlayerStat PlayerStat;
+    internal PlayerStat playerStat;
     private void Awake()
     {
         allEnemies.Add(this);
-        
+        playerStat = FindAnyObjectByType<PlayerStat>();
     }
     internal void setSprite()
     {
@@ -74,8 +74,8 @@ public class Enemy : MonoBehaviour
     {
         if (w)
         {
-
-            PlayerStat.GagnerArgent(stat.valeur);
+            playerStat.ennemieBattu();
+            playerStat.GagnerArgent(stat.valeur);
         }
         allEnemies.Remove(this);
         Destroy(gameObject);

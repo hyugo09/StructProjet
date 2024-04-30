@@ -121,8 +121,13 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
         {
             if (GM.tourelleSelectionner != null)
             {
-                Turret = GM.tourelleSelectionner;
-                ChangeTurretVisual();
+                if(GM.playerStat.money - GM.tourelleSelectionner.prix >= 0)
+                {
+                    GM.playerStat.money -= GM.tourelleSelectionner.prix;
+                    Turret = GM.tourelleSelectionner;
+                    ChangeTurretVisual();
+                }
+                
             }
             else
             {

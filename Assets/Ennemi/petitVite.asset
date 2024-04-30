@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseVitesse: 5
   hp: 5
-  valeur: 150
+  valeur: 250
   Fly: 0
   Sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
   Color: {r: 0.25, g: 0.82542, b: 1, a: 1}

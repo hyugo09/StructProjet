@@ -19,9 +19,7 @@ public class GameManager : MonoBehaviour
     GameTile LastPathTile;
     //public List<GameTile>[] paths = new List<GameTile>[5]; //peut etre pas
 
-    internal Turret selectedTurret;
-
-    PlayerStat playerStat;
+    internal PlayerStat playerStat;
     internal Turret tourelleSelectionner;
     public bool modeInfini = false;
 

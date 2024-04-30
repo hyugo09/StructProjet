@@ -11,6 +11,7 @@ public class PlayerStat : MonoBehaviour
     public int HP = 3;
     public TextMeshProUGUI textMoney;
     public TextMeshProUGUI textHP;
+    public TextMeshProUGUI textennemie;
     public GameObject endScreen;
     public TextMeshProUGUI endText;
     public int vague = 0;
@@ -45,22 +46,26 @@ public class PlayerStat : MonoBehaviour
     }
     public void VagueSuivante()
     {
-        if(vague == 5)
+        //a 1 pour tester
+        if(vague == 1)
         {
             GameWin();
         }
         vague++;
-        ennemieRestant = vague * 50;
+        ennemieRestant = vague * 25;
         
     }
     public bool ennemieBattu()
     {
         ennemieRestant--;
+        textennemie.text = "Ennemie Restant : " + ennemieRestant.ToString();
         if(ennemieRestant <= 0)
         {
             VagueSuivante();
+            return true;
         }
         return false;
+        
     }
     internal void GameOver()
     {
