@@ -23,7 +23,7 @@ public class PlayerStat : MonoBehaviour
         setStatUi();
         VagueSuivante();
     }
-    public void degat(int degat)
+    public void ViePerdu(int degat)
     {
         HP -= degat;
         if (HP <= 0)

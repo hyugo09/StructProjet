@@ -77,6 +77,10 @@ public class Enemy : MonoBehaviour
             playerStat.ennemieBattu();
             playerStat.GagnerArgent(stat.valeur);
         }
+        else
+        {
+            playerStat.ViePerdu(1);
+        }
         allEnemies.Remove(this);
         Destroy(gameObject);
     }
