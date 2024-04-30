@@ -17,4 +17,4 @@ MonoBehaviour:
   valeur: 500
   Fly: 0
   Sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
-  Color: {r: 1, g: 0.83550763, b: 0, a: 0}
+  Color: {r: 1, g: 0.83550763, b: 0, a: 1}

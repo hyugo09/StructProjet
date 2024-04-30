@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     }
     internal void setSprite()
     {
-        //visual.GetComponent<SpriteRenderer>().sprite = stat.Sprite;
+        visual.GetComponent<SpriteRenderer>().sprite = stat.Sprite;
         visual.GetComponent<SpriteRenderer>().color = stat.Color;
     }
     internal void SetPath(List<GameTile> pathToGoal)

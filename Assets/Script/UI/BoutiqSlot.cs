@@ -13,4 +13,9 @@ public class BoutiqSlot : MonoBehaviour
         image.sprite = tourelle.Sprite;
         image.color = tourelle.Color;
     }
+
+    private void OnMouseDown()
+    {
+        FindFirstObjectByType<GameManager>().tourelleSelectionner = tourelle;
+    }
 }

@@ -8,8 +8,8 @@ public class DataTransfert : MonoBehaviour
 {
     public List<Turret> UnlockedTurret;
     public int bonusHealth;
-    public int bonusAttack;
-    public float bonusCooldown;
+    public float bonusAttack = 1;
+    public float bonusCooldown = 1;
     public bool lastGameWin;
     public List<GameObject> niveauButton;
     public bool[] niveauUnlock = new bool[5];
@@ -24,12 +24,20 @@ public class DataTransfert : MonoBehaviour
     public void resetButton()
     {
         niveauButton.Clear();
+        var temp = FindObjectsByType<DataTransfert>(FindObjectsSortMode.None);
+        foreach (var t in temp)
+        {
+            if (t != this)
+            {
+                Destroy(t);
+            }
+        }
     }
     public void nodeActivationf(int i)
     {
         nodeObtained[i] = true;
     }
-    
+
     public void UnlockerTourelle(Turret tourelle)
     {
         if (!UnlockedTurret.Contains(tourelle))
@@ -45,10 +53,10 @@ public class DataTransfert : MonoBehaviour
         }
     }
     public void UnlockerNiveau()
-    {       
-        for(int i = 0; i < niveauUnlock.Length; i++)
+    {
+        for (int i = 0; i < niveauUnlock.Length; i++)
         {
-            if(niveauUnlock[i] == false)
+            if (niveauUnlock[i] == false)
             {
                 niveauUnlock[i] = true;
                 return;
@@ -62,7 +70,7 @@ public class DataTransfert : MonoBehaviour
     }
     public bool dépenserPC(int cout)
     {
-        if(NombrePCDispo - cout <= 0)
+        if (NombrePCDispo - cout <= 0)
         {
             return false;
         }

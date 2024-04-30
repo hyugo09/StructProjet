@@ -25,7 +25,7 @@ public class CompetenceUI : MonoBehaviour
         currentNode = newCurrentNode;
         Image.color = currentNode.couleur;
         Image.sprite = currentNode.sprite;
-        text.text = currentNode.description;
+        text.text = currentNode.description.Replace("\\n","\n");
         if(currentNode.currentState == State.Accessible)
         {
             Button.enabled = true;

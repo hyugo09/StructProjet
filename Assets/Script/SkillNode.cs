@@ -78,11 +78,11 @@ public class SkillNode : MonoBehaviour
     }
     public void AttackBonus()
     {
-        FindAnyObjectByType<DataTransfert>().bonusAttack++;
+        FindAnyObjectByType<DataTransfert>().bonusAttack += 0.1f;
     }
     public void CooldownBonus()
     {
-        FindAnyObjectByType<DataTransfert>().bonusCooldown += 10;
+        FindAnyObjectByType<DataTransfert>().bonusCooldown += 0.1f;
     }
     public void VieBonus()
     {
