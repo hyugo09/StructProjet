@@ -170,10 +170,11 @@ MonoBehaviour:
   gameTilePrefab: {fileID: 6064064788169888742, guid: 3fa472b2f3f9c634fb73e35308dd2ecf, type: 3}
   enemyPrefab: {fileID: 1812623713565188647, guid: 216e7ca958bde3245a10a47ca644e7be, type: 3}
   modeInfini: 0
-  posWallX: 050000000700000013000000
-  posWallY: 020000000600000004000000
+  posWallX: 0400000013000000
+  posWallY: 0000000004000000
   ennemyStats:
   - {fileID: 11400000, guid: c0341d1eec0d15d449eb1f90946286b9, type: 2}
+  - {fileID: 11400000, guid: a37a599f51184414f84d5a501f402361, type: 2}
 --- !u!1 &200732621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2636,7 +2637,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.33962262, g: 0.24913621, b: 0.245105, a: 0}
+  m_BackGroundColor: {r: 0.5188679, g: 0, b: 0.020526085, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
