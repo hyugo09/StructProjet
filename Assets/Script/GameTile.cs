@@ -83,13 +83,14 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
 
     IEnumerator AttackCoroutine(Enemy target)
     {
-        target.Attack(Turret.attack);
+        float temp = Turret.attack * FindAnyObjectByType<DataTransfert>().bonusAttack;
+        target.Attack((int)temp);
         canAttack = false;
         lineRenderer.SetPosition(1, target.transform.position);
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(0.2f);
         lineRenderer.enabled = false;
-        yield return new WaitForSeconds(Turret.shotCooldown);
+        yield return new WaitForSeconds(Turret.shotCooldown * FindAnyObjectByType<DataTransfert>().bonusCooldown);
         canAttack = true;
     }
 
@@ -109,14 +110,19 @@ public class GameTile : MonoBehaviour, IPointerEnterHandler,
     {
         hoverRenderer.enabled = false;
     }
-
+    private void ChangeTurretVisual()
+    {
+        turretRenderer.sprite = Turret.Sprite;
+        turretRenderer.color = Turret.Color;
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (spawnRenderer.enabled == false|| spriteRenderer.color == Color.yellow)
         {
-            if (GM.selectedTurret != null)
+            if (GM.tourelleSelectionner != null)
             {
-                Turret = GM.selectedTurret;
+                Turret = GM.tourelleSelectionner;
+                ChangeTurretVisual();
             }
             else
             {

@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
         else
         {
             HP -= degat;
-            float scaleChange = 1 - (float)(degat / stat.hp);            
+            float scaleChange = 1f - ((float)degat / (float)stat.hp);            
             visual.transform.localScale *= scaleChange;
 
         }

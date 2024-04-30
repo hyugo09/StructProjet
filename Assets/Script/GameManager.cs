@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     internal Turret selectedTurret;
 
     PlayerStat playerStat;
-
+    internal Turret tourelleSelectionner;
     public bool modeInfini = false;
 
     [SerializeField] private int[] posWallX;

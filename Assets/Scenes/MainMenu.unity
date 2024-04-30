@@ -301,7 +301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &557447510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -648,7 +648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &710455985
 RectTransform:
   m_ObjectHideFlags: 0
@@ -917,7 +917,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &748136138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1050,7 +1050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &753902452
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2131,7 +2131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1432079456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2607,6 +2607,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons:
   - {fileID: 753902451}
+  - {fileID: 557447509}
+  - {fileID: 1432079455}
+  - {fileID: 710455984}
+  - {fileID: 748136137}
+  data: {fileID: 0}
 --- !u!1 &2110783219
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,8 +2837,8 @@ MonoBehaviour:
   UnlockedTurret:
   - {fileID: 11400000, guid: f96e2ce4c922825469784d6f5ebfd93c, type: 2}
   bonusHealth: 0
-  bonusAttack: 0
-  bonusCooldown: 0
+  bonusAttack: 1
+  bonusCooldown: 1
   lastGameWin: 0
   niveauButton: []
   niveauUnlock: 0100000000
